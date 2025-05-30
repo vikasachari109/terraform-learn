@@ -1,5 +1,0 @@
-rg-name = "TF-RG"
-rg-location = "eastasia"
-prefix = "TFprefix"
-vnet_cidr_prefix = "10.10.0.0/16"
-subnet_cidr_prefix = "10.10.1.0/24"
