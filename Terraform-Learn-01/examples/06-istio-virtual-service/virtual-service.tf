@@ -1,5 +1,5 @@
 data "azurerm_kubernetes_cluster" "ask-cluster-poc" {
-  name = "ask-cluster-poc"
+  name                = "ask-cluster-poc"
   resource_group_name = "aks-rg"
 }
 
@@ -12,7 +12,7 @@ resource "kubernetes_manifest" "virtual_service" {
       namespace = "default"
     }
     spec = {
-      hosts = ["my-service"]
+      hosts    = ["my-service"]
       gateways = ["my-gateway"]
       http = [{
         match = [{

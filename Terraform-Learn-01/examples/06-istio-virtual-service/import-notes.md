@@ -1,11 +1,17 @@
-terraform import azurerm_kubernetes_cluster.cluster1 /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.ContainerService/managedClusters/cluster1
+# Import Notes
 
+Use placeholder IDs when you document imports.
 
-terraform import azurerm_kubernetes_cluster.ask-cluster-poc /subscriptions/02580222-54b0-45d2-b7bd-8e95bf861521/resourceGroups/aks-rg/providers/Microsoft.ContainerService/managedClusters/ask-cluster-poc
+## Import An Existing AKS Cluster
 
+```bash
+terraform import azurerm_kubernetes_cluster.cluster1 \
+  /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.ContainerService/managedClusters/cluster1
+```
 
-----
+## AKS Service Mesh Commands
 
-az aks mesh enable --resource-group aks-rg --name ask-cluster-poc
-
-az aks mesh enable-ingress-gateway --resource-group aks-rg --name ask-cluster-poc --ingress-gateway-type internal
+```bash
+az aks mesh enable --resource-group aks-rg --name demo-aks
+az aks mesh enable-ingress-gateway --resource-group aks-rg --name demo-aks --ingress-gateway-type internal
+```

@@ -1,10 +1,10 @@
 resource "azurerm_resource_group" "example" {
-  name     = "${var.rg-name}"
-  location = "${var.rg-location}"
+  name     = var.rg-name
+  location = var.rg-location
 }
 
 resource "azurerm_kubernetes_cluster" "example" {
-  name                = "${var.aks-cluster-name}"
+  name                = var.aks-cluster-name
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
   dns_prefix          = "akstfdemo"
@@ -15,7 +15,7 @@ resource "azurerm_kubernetes_cluster" "example" {
     vm_size    = "Standard_D2_v2"
   }
 
-    identity {
+  identity {
     type = "SystemAssigned"
   }
 }

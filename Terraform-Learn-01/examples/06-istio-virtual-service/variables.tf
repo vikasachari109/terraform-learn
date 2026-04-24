@@ -1,5 +1,5 @@
 variable "vs-name" {
-  type = string
+  type        = string
   description = "this is a vs name"
-  default = "aks-vs-demo"
+  default     = "aks-vs-demo"
 }

@@ -1,6 +1,6 @@
 resource "azurerm_resource_group" "rg-01" {
-  name     = "${var.rg-name}"
-  location = "${var.rg-location}"
+  name     = var.rg-name
+  location = var.rg-location
 }
 
 resource "azurerm_virtual_network" "vnet-01" {
@@ -18,15 +18,15 @@ resource "azurerm_subnet" "subnet-01" {
 }
 resource "azurerm_network_security_group" "nsg1" {
   name                = "${var.prefix}-nsg1"
-  resource_group_name = "${azurerm_resource_group.rg-01.name}"
-  location            = "${azurerm_resource_group.rg-01.location}"
+  resource_group_name = azurerm_resource_group.rg-01.name
+  location            = azurerm_resource_group.rg-01.location
 }
 
 # NOTE: this allows RDP from any network
 resource "azurerm_network_security_rule" "rdp" {
   name                        = "rdp"
-  resource_group_name         = "${azurerm_resource_group.rg-01.name}"
-  network_security_group_name = "${azurerm_network_security_group.nsg1.name}"
+  resource_group_name         = azurerm_resource_group.rg-01.name
+  network_security_group_name = azurerm_network_security_group.nsg1.name
   priority                    = 102
   direction                   = "Inbound"
   access                      = "Allow"
@@ -55,13 +55,13 @@ resource "azurerm_network_interface" "nic1" {
 }
 
 resource "azurerm_windows_virtual_machine" "main" {
-  name                            = "${var.prefix}-vmt01"
-  resource_group_name             = azurerm_resource_group.rg-01.name
-  location                        = azurerm_resource_group.rg-01.location
-  size                            = "Standard_B1s"
-  admin_username                  = "adminuser"
-  admin_password                  = "P@ssw0rd1234!"
-  network_interface_ids = [ azurerm_network_interface.nic1.id ]
+  name                  = "${var.prefix}-vmt01"
+  resource_group_name   = azurerm_resource_group.rg-01.name
+  location              = azurerm_resource_group.rg-01.location
+  size                  = "Standard_B1s"
+  admin_username        = "adminuser"
+  admin_password        = "P@ssw0rd1234!"
+  network_interface_ids = [azurerm_network_interface.nic1.id]
 
   source_image_reference {
     publisher = "MicrosoftWindowsServer"

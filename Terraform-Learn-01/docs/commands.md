@@ -1,60 +1,91 @@
-Here’s a complete list of the most-used Terraform commands. 👇
+# Terraform Commands
 
-🔹 Basic Setup & Initialization
-terraform -version → Check Terraform version
-terraform init → Initialize working directory with required plugins & providers
-terraform validate → Validate syntax & configuration files
-terraform fmt → Format Terraform code in standard style
-terraform providers → Show all providers used in the configuration
+This is a practical command list for day-to-day Terraform work.
 
-🔹 Plan, Apply & Destroy
-terraform plan → Show what changes will be made before applying
-terraform apply → Apply infrastructure changes
-terraform destroy → Delete all resources created by Terraform
-terraform apply -auto-approve → Skip approval step
-terraform plan -out=tfplan → Save plan output to a file
+## Setup And Validation
 
-🔹 Workspace & Environment Management
-terraform workspace list → List all workspaces
-terraform workspace new dev → Create a new workspace
-terraform workspace select dev → Switch to specific workspace
-terraform workspace delete dev → Delete workspace
+```bash
+terraform version
+terraform init
+terraform validate
+terraform fmt
+terraform fmt -recursive
+terraform providers
+```
 
-🔹 State File Management (Critical for DevOps)
-terraform show → Show current state or plan
-terraform state list → List all resources tracked in state
-terraform state show <resource> → Show details of a specific resource
-terraform state rm <resource> → Remove resource from state
-terraform refresh → Update state file with real resource data
-terraform taint <resource> → Mark a resource for recreation
-terraform untaint <resource> → Undo taint
+- `terraform version`: show the installed Terraform version
+- `terraform init`: initialize the working directory
+- `terraform validate`: check configuration syntax and internal consistency
+- `terraform fmt`: format Terraform files
+- `terraform providers`: show the providers required by the configuration
 
-🔹 Variable & Output Management
-terraform output → Show output variables
-terraform output -json → Show outputs in JSON format
-terraform apply -var="instance_type=t2.micro" → Pass variable from CLI
-terraform plan -var-file="dev.tfvars" → Use variable file
+## Plan And Apply
 
-🔹 Backend & Remote State (Used in DevOps Pipelines)
-terraform init -backend-config="backend.hcl" → Initialize backend configuration
-terraform state pull → Download remote state
-terraform state push → Upload local state to remote
+```bash
+terraform plan
+terraform plan -out=tfplan
+terraform apply
+terraform apply tfplan
+terraform destroy
+```
 
-🔹 Module Management
-terraform get → Download modules
-terraform init -upgrade → Upgrade modules & providers
-terraform graph → Visualize dependency graph
+- `terraform plan`: preview infrastructure changes
+- `terraform plan -out=tfplan`: save a plan to a file
+- `terraform apply`: apply the configuration interactively
+- `terraform apply tfplan`: apply the previously saved plan
+- `terraform destroy`: remove managed infrastructure
 
-🔹 Cleanup & Troubleshooting
-terraform fmt -recursive → Format all .tf files recursively
-terraform validate → Detect configuration issues early
-terraform apply -refresh-only → Refresh state without changing infra
-terraform force-unlock <LOCK_ID> → Unlock a stuck state file
+## Variables And Outputs
 
-🔹Useful in CI/CD Pipelines
-terraform plan -input=false -out=tfplan → Non-interactive plan for pipelines
-terraform apply -input=false tfplan → Apply pre-generated plan
-terraform fmt -check → Check formatting in GitHub Actions
-terraform validate → Validate configs automatically in CI
+```bash
+terraform plan -var-file="dev.tfvars"
+terraform apply -var="location=eastus"
+terraform output
+terraform output -json
+```
 
-Follow me for more insights on Cloud, Terraform, and DevOps automation.
+- `-var-file`: load variables from a file
+- `-var`: pass a value directly from the command line
+- `terraform output`: show output values
+
+## Workspaces
+
+```bash
+terraform workspace list
+terraform workspace new dev
+terraform workspace select dev
+terraform workspace delete dev
+```
+
+Use workspaces when the same configuration needs separate state for multiple environments.
+
+## State Commands
+
+```bash
+terraform show
+terraform state list
+terraform state show <resource_address>
+terraform state rm <resource_address>
+terraform state pull
+terraform state push
+terraform force-unlock <LOCK_ID>
+```
+
+- `terraform show`: display the current state or a saved plan
+- `terraform state list`: list tracked resources
+- `terraform state show`: inspect one tracked resource
+- `terraform state rm`: remove an object from state without deleting the real resource
+- `terraform state pull`: download remote state
+- `terraform state push`: upload local state to a backend
+- `terraform force-unlock`: unlock a stuck state lock
+
+## Pipeline-Friendly Commands
+
+```bash
+terraform fmt -check
+terraform validate
+terraform plan -input=false -out=tfplan
+terraform apply -input=false tfplan
+```
+
+These commands are useful in CI/CD workflows because they reduce interactive prompts and make validation predictable.
